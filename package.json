@@ -1,0 +1,20 @@
+{
+  "name": "moomoo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --workspace client",
+    "build:dev": "npm run build:dev --workspace client",
+    "start": "npm run start --workspace server",
+    "dev": "npm run dev --workspace server"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

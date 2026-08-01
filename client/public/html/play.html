@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta property="og:image:alt" content="MooMoo.io promotional artwork showing players defending a base">
+  <link rel="stylesheet" href="/moomoo/css/hammersmith-one.css">
+  <link rel="stylesheet" href="/moomoo/css/material-icons.css">
+  <link rel="stylesheet" href="/moomoo/css/main.css">
+  <link rel="shortcut icon" type="image/png" href="https://moomoo.io/img/favicon.png">
+  <title>Pink Moo</title>
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Play MooMoo.io — Multiplayer Survival .io Game">
+  <meta name="twitter:description"
+    content="Join the ultimate survival .io experience. Build, team up, and dominate the MooMoo.io battlefield in your browser.">
+  <meta name="twitter:image" content="https://moomoo.al007ex.com/img/promotion/banner_4.png">
+  <meta name="twitter:image:alt" content="MooMoo.io promotional artwork of a fortified base under attack">
+  <!-- JS: type=module is deferred by default; also add nomodule fallback if you ship it. -->
+  <script type="module" crossorigin src="/moomoo/assets/bundle.js"></script>
+</head>
+
+<body>
+  <script src="./libs/jquery-3.2.1.min.js"></script>
+  <script src="./libs/jquery-ui.js"></script>
+  <div id="errorNotification" class="menuCard" style="display:none">
+    <div>It looks like MooMoo ran in to a problem. Please try <a target="_blank"
+        href="https://www.computerhope.com/issues/ch001411.htm">disabling all of your browser extensions</a> and
+      reloading the page. </div>
+    <div style="text-align:center">
+      <a onclick="errorNotification.style.display = 'none' " style="cursor:pointer">Hide</a>
+    </div>
+  </div>
+  <div id="shutdownDisplay" hidden></div>
+  <div id="mainMenu">
+    <div id="menuContainer">
+      <div id="gameName">Pink Moo</div>
+      <div id="loadingText">Loading...</div>
+      <div id="menuCardHolder" style="display:none">
+        <!-- Left Column - Leaderboard -->
+        <div class="menuColumn leftColumn" style="display:none">
+          <div class="menuCard serverCard">
+            <div class="sectionTitle" style="margin-top: 16px; margin-bottom: 12px;">
+              <i class="material-icons">leaderboard</i>
+              <span>Top Players</span>
+            </div>
+            <div id="menuLeaderboard"
+              style="display: flex; flex-direction: column; gap: 6px; overflow-y: auto; max-height: 200px; padding-right: 4px;">
+              <div class="leaderboardEntry">
+                <span class="leaderRank">1</span>
+                <span class="leaderName">Player 1</span>
+                <span class="leaderScores">1250</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">2</span>
+                <span class="leaderName">Player 2</span>
+                <span class="leaderScores">980</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">3</span>
+                <span class="leaderName">Player 3</span>
+                <span class="leaderScores">750</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">4</span>
+                <span class="leaderName">Player 4</span>
+                <span class="leaderScores">620</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">5</span>
+                <span class="leaderName">Player 5</span>
+                <span class="leaderScores">500</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">6</span>
+                <span class="leaderName">Player 6</span>
+                <span class="leaderScores">450</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">7</span>
+                <span class="leaderName">Player 7</span>
+                <span class="leaderScores">380</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">8</span>
+                <span class="leaderName">Player 8</span>
+                <span class="leaderScores">320</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">9</span>
+                <span class="leaderName">Player 9</span>
+                <span class="leaderScores">280</span>
+              </div>
+              <div class="leaderboardEntry">
+                <span class="leaderRank">10</span>
+                <span class="leaderName">Player 10</span>
+                <span class="leaderScores">250</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Center Column - Tabs -->
+        <div class="menuColumn centerColumn">
+          <div class="menuCard tabbedCard" id="setupCard">
+            <div class="tabNavigation">
+              <div class="tabButton active" data-tab="game">
+                <i class="material-icons">sports_esports</i>
+                <span>Game</span>
+              </div>
+              <div class="tabButton" data-tab="info">
+                <i class="material-icons">info</i>
+                <span>Info</span>
+              </div>
+              <div class="tabButton" data-tab="settings">
+                <i class="material-icons">settings</i>
+                <span>Settings</span>
+              </div>
+            </div>
+            <div class="tabContentWrapper">
+              <!-- Game Tab -->
+              <div id="gameTab" class="tabContent active">
+                <div class="tabInner" style="padding: 16px; display: flex; flex-direction: column; height: 100%;">
+                  <div class="sectionTitle" style="margin-bottom: 12px; flex-shrink: 0;">
+                    <i class="material-icons">sports_esports</i>
+                    <span>Enter Game</span>
+                  </div>
+                  <div style="margin-bottom: 12px; display: flex; gap: 8px;">
+                    <input id="nameInput" placeholder="Enter Name" maxlength="15"
+                    style="flex-shrink: 0;">
+                    <div id="enterGame" class="menuButton primaryButton"
+                      style="width: 120px; flex-shrink: 0; margin-bottom: 5px;">
+                      <span style="position: relative; top: calc(100% - 24px); font-size: 20px;">Play</span>
+                    </div>
+                  </div>
+                  <div id="characterMainContainer"
+                    style="position: relative; background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%); border: 2px solid #e0e0e0; border-radius: 8px; min-height: 140px; padding: 12px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+                    <div style="display: flex; gap: 12px; flex: 1;">
+                      <div id="characterPreviewContainer"
+                        style="position: relative; width: 163px; height: 163px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f8f8f8 0%, #f0f0f0 100%); border: 2px solid #e0e0e0; border-radius: 8px; flex-shrink: 0;">
+                        <div id="characterPreview" style="cursor: pointer; position: relative; z-index: 1;">
+                          <canvas id="previewCanvas"
+                            style="border-radius: 10px; background: transparent; display: block; width: 100%; height: 100%;"></canvas>
+                        </div>
+                        <div id="skinColorPicker"
+                          style="display: none; position: absolute; bottom: 50%; left: calc(-100% + 50px); --trans-y: 50%; transform: translateY(var(--trans-y)); background: #fff; padding: 12px; border-radius: 10px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); border: 2px solid #e0e0e0; z-index: 10; min-width: 160px; opacity: 0; transition: 0.5s ease, transform 0.5s ease;">
+                          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 10px;">
+                            <i class="material-icons" style="font-size: 18px; color: var(--col-pri-1);">color_lens</i>
+                            <span style="font-size: 14px; font-weight: 600; color: #292929;">Skin Color</span>
+                          </div>
+                          <div id="skinColorHolder"></div>
+                        </div>
+                      </div>
+                      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex-grow: 1">
+                        <div
+                          style="width: 100%; box-sizing: border-box; background: #fff; border: 2px solid #e0e0e0; border-radius: 6px; padding: 12px; min-height: calc(100% - 26px);">
+                          <div
+                            style="font-size: 12px; font-weight: 600; color: #292929; margin-bottom: 8px; text-align: center;">
+                            Player Preview </div>
+                          <div
+                            style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 8px;">
+                            <div>
+                              <select id="hatSelect"
+                                style="width: 100%; padding: 6px 4px; border: 2px solid #e0e0e0; border-radius: 4px; font-size: 12px; background: #fff; cursor: pointer; outline: none; height: 32px; color: #333; font-weight: 500;">
+                                <option value="0" selected>No Hat</option>
+                                <option value="6">Soldier</option>
+                                <option value="22">Emp</option>
+                                <option value="14">Windmill</option>
+                                <option value="55">Bloodthrister</option>
+                              </select>
+                            </div>
+                            <div>
+                              <select id="accessorySelect"
+                                style="width: 100%; padding: 6px 4px; border: 2px solid #e0e0e0; border-radius: 4px; font-size: 12px; background: #fff; cursor: pointer; outline: none; height: 32px; color: #333; font-weight: 500;">
+                                <option value="0" selected>No Acc</option>
+                                <option value="11">Monkey Tail</option>
+                                <option value="19">Shadow Wings</option>
+                                <option value="18">Blood Wings</option>
+                                <option value="21">Corrupt X Wings</option>
+                              </select>
+                            </div>
+                            <div style="grid-column: 1 / -1;">
+                              <select id="weaponSelect"
+                                style="width: 100%; padding: 6px 4px; border: 2px solid #e0e0e0; border-radius: 4px; font-size: 12px; background: #fff; cursor: pointer; outline: none; height: 32px; color: #333; font-weight: 500;">
+                                <option value="0" selected>Tool Hammer</option>
+                                <option value="5">Polearm</option>
+                                <option value="7">Daggers</option>
+                                <option value="10">Great Hammer</option>
+                                <option value="4">Katana</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div style="display: flex; flex-direction: column;">
+                            <label
+                              style="font-size: 12px; color: #666; display: block; margin-bottom: 6px; margin-top: 10px">
+                              Weapon Variant: <span id="weaponUpgradeValue"
+                                style="color: var(--col-pri-1); font-weight: 600; font-size: 13px;">Default</span>
+                            </label>
+                            <input type="range" id="weaponUpgradeSlider" min="0" max="4" value="0" step="1"
+                              style="cursor: pointer;">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Info Tab -->
+              <div id="infoTab" class="tabContent" style="height: 100%; overflow-y: auto; border-radius: 0 0 10px 10px">
+                <div class="tabInner">
+                  <div class="contentSection">
+                    <div class="sectionTitle">
+                      <i class="material-icons">waving_hand</i>
+                      <span>Welcome</span>
+                    </div>
+                    <div class="menuText" style="margin-bottom: 12px;"> Welcome to MooMoo.io! Build your village, gather
+                      resources, and defend against other players. </div>
+                    <div class="menuText" style="font-size: 14px; color: #888; margin-bottom: 12px;">
+                      <strong>Objective:</strong> Collect resources, build structures, and survive against enemies.
+                    </div>
+                    <div class="infoBox" style="margin-bottom: 20px;">
+                      <i class="material-icons">info</i>
+                      <span>Choose your name and start playing!</span>
+                    </div>
+                  </div>
+                  <div class="contentSection">
+                    <div class="sectionTitle">
+                      <i class="material-icons">keyboard</i>
+                      <span>Controls</span>
+                    </div>
+                    <div id="desktopInstructions">
+                      <div class="controlItem">
+                        <span class="controlKey">W, A, S, D</span> Movement
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">Mouse</span> Look Around
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">Left Click</span> Attack
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">Right Click</span> Break
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">E</span> Auto Gather
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">Q</span> Quick Select Food
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">F</span> Quick Select Trap
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">V</span> Quick Select Spikes
+                      </div>
+                      <div class="controlItem">
+                        <span class="controlKey">X</span> Lock Rotation
+                      </div>
+                    </div>
+                  </div>
+                  <div class="contentSection">
+                    <div class="sectionTitle">
+                      <i class="material-icons">checkroom</i>
+                      <span>Hats & Accessories</span>
+                    </div>
+                    <div class="menuText">Unlock cosmetics by playing the game and earning points. Visit the in-game
+                      store to browse available items.</div>
+                    <div class="infoBox">
+                      <i class="material-icons">stars</i>
+                      <span>Play to unlock exclusive items!</span>
+                    </div>
+                  </div>
+                  <div class="contentSection">
+                    <div class="menuText" style="text-align: center;">Created by <a href="" target="_blank"
+                        class="menuLink">Pink</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Settings Tab -->
+              <div id="settingsTab" class="tabContent">
+                <div class="tabInner">
+                  <div class="contentSection">
+                    <div class="sectionTitle">
+                      <i class="material-icons">tune</i>
+                      <span>Game Settings</span>
+                    </div>
+                    <div class="settingsGrid">
+                      <div class="settingItem">
+                        <div class="settingLabel">
+                          <i class="material-icons">high_quality</i>
+                          <span>Native Resolution</span>
+                        </div>
+                        <input id="nativeResolution" type="checkbox" class="settingCheckbox" />
+                      </div>
+                      <div class="settingItem">
+                        <div class="settingLabel">
+                          <i class="material-icons">wifi</i>
+                          <span>Show Ping</span>
+                        </div>
+                        <input id="showPing" type="checkbox" class="settingCheckbox" />
+                      </div>
+                      <div class="settingItem">
+                        <div class="settingLabel">
+                          <i class="material-icons">autorenew</i>
+                          <span>Auto Respawn</span>
+                        </div>
+                        <input id="autoRespawn" type="checkbox" class="settingCheckbox" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right Column - Account -->
+        <div class="menuColumn rightColumn" style="display:none">
+          <div class="menuCard" id="guideCard"
+            style="padding: 16px; display: flex; flex-direction: column; align-items: center; height: 100%;">
+            <div class="menuHeader">Servers</div>
+            <div id="serverBrowser">
+              <select>
+                <option disabled="">Frankfurt - 18 players</option>
+                <option value="frankfurt:XT">Frankfurt XT [16/40] [314ms]</option>
+                <option value="frankfurt:GM">Frankfurt GM [1/40] [314ms]</option>
+                <option value="frankfurt:KV">Frankfurt KV [1/40] [314ms]</option>
+                <option disabled=""></option>
+                <option disabled="">London - 5 players</option>
+                <option value="london:SE">London SE [5/40] [298ms]</option>
+                <option value="london:EB">London EB [0/40] [298ms]</option>
+                <option disabled=""></option>
+                <option disabled="">Silicon Valley - 3 players</option>
+                <option value="siliconvalley:TT">Silicon Valley TT [2/40] [190ms]</option>
+                <option value="siliconvalley:PF">Silicon Valley PF [1/40] [190ms]</option>
+                <option value="siliconvalley:YZ">Silicon Valley YZ [0/40] [190ms]</option>
+                <option disabled=""></option>
+                <option disabled="">Miami - 10 players</option>
+                <option value="miami:UU">Miami UU [7/40] [259ms]</option>
+                <option value="miami:HP">Miami HP [2/40] [259ms]</option>
+                <option value="miami:EU">Miami EU [1/40] [259ms]</option>
+                <option value="miami:BS">Miami BS [0/40] [259ms]</option>
+                <option disabled=""></option>
+                <option disabled="">Sydney - 1 players</option>
+                <option value="sydney:GZ">Sydney GZ [1/40] [188ms]</option>
+                <option value="sydney:YK">Sydney YK [0/40] [188ms]</option>
+                <option disabled=""></option>
+                <option disabled="">Singapore - 14 players</option>
+                <option value="singapore:GX">Singapore GX [13/40] [109ms]</option>
+                <option value="singapore:TE">Singapore TE [1/40] [109ms]</option>
+                <option disabled=""></option>
+                <option disabled="">All Servers - 51 players</option>
+              </select>
+            </div>
+            <div id="altServer">
+              <a href="//moomoo.io/">Back to MooMoo <i class="material-icons"
+                  style="font-size:10px;vertical-align:middle">arrow_forward_ios</i>
+              </a>
+            </div>
+            <div class="menuHeader" style="margin-top:10px">Select Color</div>
+            <div id="skinColorHolder">
+              <div class="skinColorItem" style="background-color: rgb(191, 143, 84);"></div>
+              <div class="skinColorItem" style="background-color: rgb(203, 176, 145);"></div>
+              <div class="skinColorItem" style="background-color: rgb(137, 108, 75);"></div>
+              <div class="skinColorItem activeSkin" style="background-color: rgb(250, 218, 220);"></div>
+              <div class="skinColorItem" style="background-color: rgb(236, 236, 236);"></div>
+              <div class="skinColorItem" style="background-color: rgb(195, 115, 115);"></div>
+              <div class="skinColorItem" style="background-color: rgb(76, 76, 76);"></div>
+              <div class="skinColorItem" style="background-color: rgb(236, 175, 247);"></div>
+              <div class="skinColorItem" style="background-color: rgb(115, 140, 195);"></div>
+              <div class="skinColorItem" style="background-color: rgb(139, 195, 115);"></div>
+              <div class="skinColorItem" style="background-color: rgb(145, 178, 219);"></div>
+            </div>
+            <div class="menuHeader" style="margin-top:10px">How To Play</div>
+            <div class="menuText">Collect resources around the map to build a village. Your Windmills generate gold over
+              time. But make sure to protect them from other players.</div>
+            <div class="menuHeader">Controls</div>
+            <div id="desktopInstructions" class="menuText">
+              <h4>Gameplay:</h4> Movement: W A S D / Arrow Keys <br> Aim: Move Mouse <br> Lock Rotation: X <br> Attack:
+              Left Click <br> Break: Right Click <br> Toggle Auto Gather: E <br> Select Item: 1-9 or Click <br> Spam
+              Food: Q <br>
+              <h4>UI:</h4> Add Map Marker: C <br> Chat: Enter <br> Quick Open Command: Slash Close Windows: Esc <br>
+              Toggle Client Menu: Tab <br>
+              <h4>Hacks:</h4> Place Trap: F <br> Place Spike: V <br> Place Turrets: H <br> Place Walls: B <br> Place
+              Boostpad + 2 Spikes: Y <br> Place 4 Spikes: J <br> Place 4 Turrets: K <br> Range Combo: G <br> Toggle
+              Insta: R <br> Toggle 1-tick: T <br> Toggle Spin: P <br> Grind Weapons: N <br> Reset State (Debug): Dot
+              <br>
+              <h4>Commands:</h4> /mod - Say mod version <br> /ping [times]|stop - Say ping <br> /bunker - Place 4 mines
+              <br> /pardon &lt;player-sid&gt; - Remove player from blacklist <br> /echo [all|stop] - Echoes nearest
+              player's chat <br> /follow - Follow nearest player <br> /set predict|spin [value] - Set values (debug)
+              <br>
+            </div>
+            <div id="mobileInstructions" class="menuText">Movement: Drag on left side of screen <br>Gather/Attack: Drag
+              on right side of screen <br>Select Item: Touch item at bottom <br>Ping Minimap: Touch map <br>
+            </div>
+            <div class="menuHeader">Settings</div>
+            <div class="settingRadio">
+              <input id="nativeResolution" type="checkbox"> Use Native Resolution
+            </div>
+            <div class="settingRadio">
+              <input id="showPing" type="checkbox"> Show Ping
+            </div>
+            <div class="menuText">Created by <a href="https://frvr.com/" target="_blank" class="menuLink">FRVR</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="settingsButton" class="ytLink">
+      <i class="material-icons" style="font-size:30px;vertical-align:middle">&#xE8B8;</i>
+      <span>Settings</span>
+    </div>
+    <div id="partyButton" class="inParty">
+      <span></span>
+      <i class="material-icons" style="font-size:30px;vertical-align:middle">&#xE8D3;</i>
+    </div>
+    <div id="joinPartyButton" class="ytLink">
+      <span>Join Party</span>
+      <i class="material-icons" style="font-size:30px;vertical-align:middle">&#xE0DA;</i>
+    </div>
+    <div id="linksContainer2" class="legacyHidden">
+      <a href="./docs/versions.txt" target="_blank" class="menuLink">v1.6.9</a> | <a
+        href="https://discord.gg/NMS3YR9Q5R" target="_blank" class="menuLink">Discord</a> | <a
+        href="https://www.youtube.com/watch?v=5DlROhT8NgU" target="_blank" class="menuLink">Terms</a> | <a
+        href="https://www.youtube.com/watch?v=5DlROhT8NgU" target="_blank" class="menuLink">Privacy</a>
+    </div>
+    <div id="infoPanelToggle" aria-label="Open info panel">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+      </svg>
+    </div>
+    <div id="linksExpandedPanel" class="hidden" aria-live="polite" aria-label="Info panel">
+      <div class="expandedPanelHeader">
+        <span style="color: #666;">Moomoo.io</span>
+        <span style="cursor: pointer;" id="versionText">v1.8.1</span>
+      </div>
+      <div class="expandedPanelSection">
+        <div class="expandedPanelSectionTitle">COMMUNITY</div>
+        <a href="https://discord.gg/MqpUzka" target="_blank" class="menuLink expandedPanelLink">
+          <svg class="expandedPanelIcon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+          </svg> Discord </a>
+      </div>
+      <div class="expandedPanelSection">
+        <div class="expandedPanelSectionTitle">LEGAL</div>
+        <a href="https://frvr.com/legal#TermsofService" target="_blank" class="menuLink expandedPanelLink">
+          <svg class="expandedPanelIcon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+          </svg> Terms </a>
+        <a href="https://frvr.com/legal#PrivacyPolicy" target="_blank" class="menuLink expandedPanelLink">
+          <svg class="expandedPanelIcon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" />
+          </svg> Privacy </a>
+      </div>
+      <div class="expandedPanelSection">
+        <div class="expandedPanelSectionTitle">JOIN</div>
+        <div class="expandedPanelJoinButton">
+          <svg class="expandedPanelButtonIcon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M16,13C15.71,13 15.38,13 15.03,13.05C16.19,13.89 17,15 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M8,11A3,3 0 0,0 11,8A3,3 0 0,0 8,5A3,3 0 0,0 5,8A3,3 0 0,0 8,11M16,11A3,3 0 0,0 19,8A3,3 0 0,0 16,5A3,3 0 0,0 13,8A3,3 0 0,0 16,11Z" />
+          </svg> Join Party
+        </div>
+      </div>
+    </div>
+    <div id="youtuberOf" class="legacyHidden"> Featured Mootuber: <div class="spanLink" id="featuredYoutube">
+        <a target="_blank" class="ytLink"
+          href="https://web.archive.org/web/20200602171143/https://www.youtube.com/channel/UCj6C_tiDeATiKd3GX127XoQ">
+          <iclass="material-icons" style="vertical-align: top;"> </i> LightThief
+        </a>
+      </div>
+    </div>
+    <div id="youtuberPanelToggle" aria-label="Open Mootuber panel">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+      </svg>
+    </div>
+    <div id="youtuberExpandedPanel" class="hidden" aria-live="polite" aria-label="Featured Mootubers">
+      <div class="expandedPanelHeader">
+        <span style="color: #666;">Featured</span>
+        <span style="color: #a56dc8;">Mootubers</span>
+      </div>
+      <div class="expandedPanelSection">
+        <div class="expandedPanelSectionTitle">CONTENT CREATORS</div>
+        <div id="youtuberLinks" role="list"></div>
+      </div>
+    </div>
+  </div>
+  <div id="pingDisplay" hidden>Not connected</div>
+  <div id="diedText">YOU DIED</div>
+  <div id="touch-controls-left"></div>
+  <div id="touch-controls-right"></div>
+  <div id="touch-controls-fullscreen"></div>
+  <div id="gameUI" style="display:none">
+    <div id="chatHolder" style="display:none">
+      <input id="chatBox" placeholder="Enter Message" maxlength="30">
+    </div>
+    <div id="upgradeHolder"></div>
+    <div id="upgradeCounter"></div>
+    <div id="topInfoHolder">
+      <div id="leaderboard">Leaderboard <div id="leaderboardData"></div>
+      </div>
+      <div></div>
+      <div id="killCounter" class="resourceDisplay"></div>
+    </div>
+    <div id="itemInfoHolder" class="uiElement"></div>
+    <div id="resDisplay">
+      <div id="foodDisplay" class="resourceDisplay"></div>
+      <div id="woodDisplay" class="resourceDisplay"></div>
+      <div id="stoneDisplay" class="resourceDisplay"></div>
+      <div id="scoreDisplay" class="resourceDisplay"></div>
+    </div>
+    <div id="bottomContainer">
+      <div id="ageText"></div>
+      <div id="ageBarContainer">
+        <div id="ageBar">
+          <div id="ageBarBody"></div>
+        </div>
+      </div>
+      <div id="actionBar"></div>
+    </div>
+    <div id="notificationDisplay" style="display:none"></div>
+    <div id="allianceButton" class="uiElement gameButton">
+      <i class="material-icons" style="font-size:40px;vertical-align:middle">&#xE8D3;</i>
+    </div>
+    <div id="leaderboardButton" class="uiElement gameButton">
+      <i class="material-icons" style="font-size:40px;vertical-align:middle">leaderboard</i>
+    </div>
+    <div id="storeButton" class="uiElement gameButton">
+      <i class="material-icons" style="font-size:40px;vertical-align:middle">&#xE8D1;</i>
+    </div>
+    <div id="chatButton" class="uiElement gameButton">
+      <i class="material-icons" style="font-size:40px;vertical-align:middle">&#xE8AF;</i>
+    </div>
+    <canvas id="mapDisplay"></canvas>
+    <div id="performanceDisplay" style="display: none;">
+      <div class="performanceItem">
+        <span class="performanceLabel">Ping:</span>
+        <span id="pingValue" class="performanceValue">0ms</span>
+      </div>
+      <div class="performanceItem">
+        <span class="performanceLabel">CPS:</span>
+        <span id="cpsValue" class="performanceValue">0</span>
+      </div>
+      <div class="performanceItem">
+        <span class="performanceLabel">FPS:</span>
+        <span id="fpsValue" class="performanceValue">60</span>
+      </div>
+      <div class="performanceItem">
+        <span class="performanceLabel">Packet:</span>
+        <span id="packetValue" class="performanceValue">0</span>
+      </div>
+    </div>
+    <div id="storeMenu">
+      <div style="padding-bottom:15px">
+        <div class="storeTab" style="margin-right:10px" onclick="changeStoreIndex(0)">Hats</div>
+        <div class="storeTab" onclick="changeStoreIndex(1)">Accessories</div>
+      </div>
+      <div id="storeHolder"></div>
+    </div>
+    <div id="allianceMenu">
+      <div id="allianceHolder"></div>
+      <div id="allianceManager"></div>
+    </div>
+  </div>
+  <canvas id="gameCanvas"></canvas>
+  <div class="dummy-elements" style="display: none;">
+    <div id="altServer"></div>
+    <div id="promoImg"></div>
+    <div id="promoImgHolder"></div>
+    <div id="adCard"></div>
+    <div id="wideAdCard"></div>
+  </div>
+</body>
+
+</html>

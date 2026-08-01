@@ -1,0 +1,22 @@
+{
+  "name": "moomooio-private-server",
+  "version": "1.2.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --trace-uncaught --trace-warnings --trace-deprecation index.js",
+    "cluster": "node --no-deprecation cluster.js"
+  },
+  "keywords": [],
+  "author": "KOOKY WARRIOR",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "http": "^0.0.1-security",
+    "inquirer": "^8.0.0",
+    "msgpack-lite": "^0.1.26",
+    "node-fetch": "^2.7.0",
+    "url": "^0.11.1",
+    "ws": "^8.13.0"
+  }
+}
