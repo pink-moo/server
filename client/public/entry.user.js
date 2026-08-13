@@ -2,18 +2,18 @@
 // @name Pink Moo Entry
 // @author Pink, Murka
 // @description Add a button to redirect to Pink's MooMoo server
-// @version 1.5
+// @version 1.6
 // @match *://sandbox.moomoo.io/
 // @match *://sandbox.moomoo.io/?*
 // @grant none
-// @run-at document-body
+// @run-at document-start
 // @icon https://www.google.com/s2/favicons?sz=64&domain=moomoo.io
 // @downloadURL https://huey.ckefgisc.org/moomoo/entry.user.js
 // ==/UserScript==
 
 let active = false;
 
-document.body.insertAdjacentHTML('beforeend', /* html */ `
+document.body.insertAdjacentHTML("beforeend", /* html */ `
   <style>
     .pme.hidden {
       display: none !important;
@@ -128,7 +128,7 @@ let url = new URL(window.location);
 function setUrl(server) {
   url.searchParams.set("server", server);
   url.search = decodeURIComponent(url.search);
-  window.history.pushState({}, '', url);
+  window.history.pushState({}, "", url);
 }
 
 if (url.searchParams.get("server") === id) {
